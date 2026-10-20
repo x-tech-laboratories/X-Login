@@ -101,6 +101,7 @@ stdenv.mkDerivation (finalAttrs: {
     install -Dm644 data/com.github.jezerm.web-greeter.svg -t $out/share/icons/hicolor/scalable/apps
     install -Dm644 data/web-greeter.1 -t $out/share/man/man1
 
+    # QtWebEngine is told where its helper process and data live, since otherwise it looks under qtbase and aborts
     makeWrapper ${pythonEnv}/bin/python $out/bin/web-greeter \
         --add-flags $out/share/web-greeter/app/__main__.py \
         "''${qtWrapperArgs[@]}" \
@@ -111,6 +112,9 @@ stdenv.mkDerivation (finalAttrs: {
           ]
         }" \
         --prefix LD_LIBRARY_PATH : "${lib.makeLibraryPath [ lightdm ]}" \
+        --set-default QTWEBENGINEPROCESS_PATH "${qt6.qtwebengine}/libexec/QtWebEngineProcess" \
+        --set-default QTWEBENGINE_RESOURCES_PATH "${qt6.qtwebengine}/resources" \
+        --set-default QTWEBENGINE_LOCALES_PATH "${qt6.qtwebengine}/qtwebengine_locales" \
         --prefix PATH : "${lib.makeBinPath [ acpid ]}" # acpi_listen, without which the battery reading never refreshes
 
     runHook postInstall
