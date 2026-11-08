@@ -17,6 +17,11 @@
   </p>
 </div>
 
+> [!NOTE]
+> X-Login is a clone of [JezerM/web-greeter][upstream] with a Nix flake added, so it can be built
+> with Nix and installed on NixOS (see [NixOS](#nixos)). Everything else tracks upstream unchanged.
+> The flake has been proposed upstream in [JezerM/web-greeter#91][upstream-pr].
+
 A modern, visually appealing greeter for LightDM, that allows to create web based themes with HTML,
 CSS and JavaScript.
 
@@ -60,7 +65,7 @@ This repository is a flake, so no separate packaging repository is needed. The s
 submodule, and Nix fetches submodules only when the URL asks for them, so `submodules=1` is required.
 
 ```sh
-nix build 'git+https://github.com/JezerM/web-greeter?submodules=1'
+nix build 'git+https://github.com/x-tech-laboratories/X-Login?submodules=1'
 ```
 
 In a NixOS configuration, add the flake as an input and point LightDM at it. The package exposes
@@ -68,7 +73,7 @@ In a NixOS configuration, add the flake as an input and point LightDM at it. The
 `greeters-directory` is a plain directory rather than a package prefix.
 
 ```nix
-inputs.web-greeter.url = "git+https://github.com/JezerM/web-greeter?submodules=1";
+inputs.web-greeter.url = "git+https://github.com/x-tech-laboratories/X-Login?submodules=1";
 ```
 
 ```nix
@@ -237,3 +242,5 @@ I was not able to reproduce the installation process in Fedora Workstation 43, d
 [web-greeter-docs]: https://web-greeter-page.vercel.app "Documentation"
 [live_demo]: https://jezerm.github.io/web-greeter-themes/ "Live Demo"
 [releases]: https://github.com/JezerM/web-greeter/releases "Releases"
+[upstream]: https://github.com/JezerM/web-greeter
+[upstream-pr]: https://github.com/JezerM/web-greeter/pull/91
